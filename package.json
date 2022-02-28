@@ -15,6 +15,7 @@
     "generate-client": "openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o ./types/client-axios"
   },
   "dependencies": {
+    "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.19.3",
     "nuxt": "^2.15.8",

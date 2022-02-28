@@ -30,6 +30,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -40,10 +41,36 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    // "~/plugins/api",
-    "~/plugins/axios",
+    "~/plugins/api",
+    // "~/plugins/axios",
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  publicRuntimeConfig: {
+    apiBaseUrl: process.env.API_BASE_URL,
+  },
+  privateRuntimeConfig: {},
+
+  axios: {
+    baseURL: process.env.API_BASE_URL
+  },
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: false,
+      home: '/'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/token/', method: 'post', propertyName: 'access' },
+          logout: false,  // ログアウト用のエンドポイント
+          user: false     // user情報を取得するためのエンドポイント
+        }
+      }
+    }
+  }
 }
