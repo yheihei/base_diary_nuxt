@@ -40,10 +40,15 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    // "~/plugins/api",
-    "~/plugins/axios",
+    "~/plugins/api",
+    // "~/plugins/axios",
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  publicRuntimeConfig: {
+    apiBaseUrl: process.env.API_BASE_URL,
+  },
+  privateRuntimeConfig: {},
 }

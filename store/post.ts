@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
-import { Post, ApiApiFactory } from '~/types/client-axios/api'
-import { Configuration } from '~/types/client-axios/configuration'
+import { Post } from '~/types/client-axios/api'
+import { Api } from '~/plugins/api'
 
 type State = {
   posts: Post[]
@@ -38,18 +38,15 @@ export const getters: GetterTree<LocalState, {}> = {
   posts: (state): Getters['posts'] => state.posts,
 }
 
-import { ApiApi } from '~/types/client-axios/api'
 declare module 'vuex/types' {
   interface Store<S> {
-    readonly $postApi: ApiApi;
+    readonly $api: Api;
   }
 }
 
 export const actions: ActionTree<LocalState, {}> = {
   async getPosts({ commit }, { search }: Actions['getPosts']) {
-    // TODO APIFactoryはプラグインでinjectしたい
-    const api = ApiApiFactory(new Configuration(), 'http://localhost:8000', this.$axios);
-    const { data } = await api.listPosts(search)
+    const { data } = await this.$api.post.listPosts(search)
     console.log('getPosts!!')
     commit('SET_POSTS', data)
   },
